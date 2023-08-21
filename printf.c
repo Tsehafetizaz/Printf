@@ -1,16 +1,17 @@
 #include "main.h"
-#include <unistd.h> // For write function
+#include <unistd.h>
 
 int _putchar(char c) {
     return write(1, &c, 1);
 }
 
 int _printf(const char *format, ...) {
+    int count = 0;
+    int i = 0;
     va_list args;
     va_start(args, format);
-    int count = 0;
 
-    for (int i = 0; format[i]; i++) {
+    for (i = 0; format[i]; i++) {
         if (format[i] == '%' && (format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == '%')) {
             switch (format[i + 1]) {
                 case 'c': {
