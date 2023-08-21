@@ -1,5 +1,11 @@
 #include "main.h"
 #include <string.h>
+
+int _putchar(char c)
+{
+	return (write(1, &c, 1));
+}
+
 int _printf(const char *format, ...)
 {
 va_list args;
@@ -24,8 +30,12 @@ i++;
 break;
 case 's':
 str = va_arg(args, char *);
-count += write(1, str, strlen(str));
-i++;
+while (*str)
+{
+	_putchar(*str);
+	str++;
+	i++;
+}
 break;
 case '%':
 count += write(1, "%", 1);
