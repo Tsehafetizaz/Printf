@@ -1,9 +1,21 @@
 #include "main.h"
 #include <unistd.h>
+/**
+ * _putchar - prints character
+ * @c: char
+ * Return: write
+ */
 
-int _putchar(char c) {
-    return write(1, &c, 1);
+int _putchar(char c)
+{
+return (write(1, &c, 1));
 }
+
+/**
+ * _printf - prints with format
+ * @format: no args
+ * Return: count
+ */
 
 int _printf(const char *format, ...)
 {
@@ -15,7 +27,7 @@ return (-1);
 va_start(args, format);
 while (format[i])
 {
-if (format[i] == '%' && 
+if (format[i] == '%' &&
 (format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == '%'))
 {
 switch (format[i + 1])
