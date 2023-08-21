@@ -1,11 +1,5 @@
 #include "main.h"
-#include <stdarg.h>
 #include <string.h>
-
-int _putchar(char c){
-return write(1, &c, 1);
-}
-
 int _printf(const char *format, ...)
 {
 va_list args;
@@ -16,7 +10,7 @@ return (-1);
 va_start(args, format);
 while (format[i])
 {
-if (format[i] == '%' &&
+if (format[i] == '%' && 
 (format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == '%'))
 {
 switch (format[i + 1])
@@ -30,9 +24,8 @@ i++;
 break;
 case 's':
 str = va_arg(args, char *);
-count += write(1, str, 1);
-while (*str)
-str++, count += _putchar(*str);
+count += write(1, str, strlen(str));
+i++;
 break;
 case '%':
 count += write(1, "%", 1);
