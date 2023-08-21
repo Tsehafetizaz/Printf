@@ -1,5 +1,10 @@
 #include "main.h"
-#include <string.h>
+#include <stdarg.h>
+
+int _putchar(char c){
+return write(1, &c, 1);
+}
+
 int _printf(const char *format, ...)
 {
 va_list args;
