@@ -51,6 +51,18 @@ i++;
 break;
 }
 }
+else if (format[i] == '%' &&
+		(format[i + 1] == 'd' || format[i + 1] == 'i'))
+{
+int num = va_arg(args, int);
+if (num < 0)
+{
+count += _putchar('-');
+num = -num;
+}
+count += print_number(num);
+i++;
+}
 else
 {
 count += write(1, &format[i], 1);
@@ -58,5 +70,27 @@ count += write(1, &format[i], 1);
 i++;
 }
 va_end(args);
+return (count);
+}
+
+/**
+ * print_number - print a number
+ * @num: num to be printed
+ * Return: number
+ */
+
+int print_number(int num)
+{
+int count = 0;
+if (num == 0)
+{
+count += _putchar('0');
+return (count);
+}
+if (num / 10)
+{
+count += print_number(num / 10);
+}
+count += _putchar('0' + num % 10);
 return (count);
 }
