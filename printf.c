@@ -1,26 +1,31 @@
 #include "main.h"
+#include <string.h>
 
 int _putchar(char c) {
     return write(1, &c, 1);
 }
 
-int _printf(const char *format, void *arg1, void *arg2) {
+int _printf(const char *format, ...) {
+    va_list args;
     int i = 0, count = 0;
     char *str;
-
+    
     if (!format)
         return (-1);
 
+    va_start(args, format);
+    
     while (format[i]) {
-        if (format[i] == '%' && (format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == '%' || format[i + 1] == 'd' || format[i + 1] == 'i')) {
+        if (format[i] == '%' &&
+            (format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == '%' || format[i + 1] == 'd' || format[i + 1] == 'i')) {
             switch (format[i + 1]) {
                 case 'c': {
-                    char c = *((char *)arg1);
+                    char c = va_arg(args, int);
                     count += write(1, &c, 1);
                     break;
                 }
                 case 's': {
-                    str = *((char **)arg1);
+                    str = va_arg(args, char *);
                     while (*str)
                         count += _putchar(*str), str++;
                     break;
@@ -30,7 +35,7 @@ int _printf(const char *format, void *arg1, void *arg2) {
                     break;
                 case 'd':
                 case 'i': {
-                    int num = *((int *)arg1);
+                    int num = va_arg(args, int);
                     if (num < 0) {
                         count += _putchar('-');
                         num = -num;
@@ -46,6 +51,7 @@ int _printf(const char *format, void *arg1, void *arg2) {
         i++;
     }
 
+    va_end(args);
     return count;
 }
 
