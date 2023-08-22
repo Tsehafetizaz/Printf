@@ -1,26 +1,28 @@
 #include "main.h"
+int _puts(char *str);
 /**
- * _printf - Our custom printf function.
- * @format: The format string.
- * ... : The values to format and print.
- * Return: The number of characters printed.
+ * _printf - Custom implementation of the printf function
+ * @format: The format string to print
+ * Return: The number of characters printed
  */
 int _printf(const char *format, ...)
 {
 unsigned int i = 0, count = 0;
 va_list args;
+char temp_char;
 if (!format)
 return (-1);
 va_start(args, format);
 while (format && format[i])
 {
-if (format[i] == '%' &&
-(format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == '%'))
+if (format[i] == '%'
+&& (format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == '%'))
 {
 switch (format[i + 1])
 {
 case 'c':
-count += write(1, &(char){va_arg(args, int)}, 1);
+temp_char = (char) va_arg(args, int);
+count += write(1, &temp_char, 1);
 i++;
 break;
 case 's':
@@ -43,9 +45,9 @@ va_end(args);
 return (count);
 }
 /**
- * _puts - Prints a string.
- * @str: The string to print.
- * Return: The number of characters printed.
+ * _puts - Custom function to print a string to stdout
+ * @str: The string to print
+ * Return: The number of characters printed
  */
 int _puts(char *str)
 {
@@ -60,4 +62,3 @@ i++;
 }
 return (count);
 }
-
