@@ -9,9 +9,6 @@ int _printf(const char *format, ...)
 {
 	va_list args;
 	int count = 0;
-	char c;
-	int num = 0;
-	const char *str;
 
 	if (format == NULL)
 		return (-1);
@@ -23,14 +20,7 @@ int _printf(const char *format, ...)
 		if (*format == '%' && *(format + 1) != '\0')
 		{
 			format++;
-			if (*format == 'c')
-				count += handle_char(args);
-			else if (*format == 's')
-				count += handle_string(args);
-			else if (*format == 'd' || *format == 'i')
-				count += handle_number(args);
-			else
-				count += handle_unknown(*format);
+			count += process_format(format, args);
 		}
 		else
 		{
@@ -45,46 +35,38 @@ int _printf(const char *format, ...)
 }
 
 /**
- * handle_char - Handles %c format specifier.
+ * process_format - Processes format specifiers.
+ * @format: The format specifier.
  * @args: The va_list of arguments.
- * Return: The number of characters printed.
+ * Return: The number of characters processed.
  */
-int handle_char(va_list args)
+int process_format(const char *format, va_list args)
 {
-	c = va_arg(args, int);
-	return (_putchar(c));
-}
+	int count = 0;
+	char c;
+	const char *str;
+	int num;
 
-/**
- * handle_string - Handles %s format specifier.
- * @args: The va_list of arguments.
- * Return: The number of characters printed.
- */
-int handle_string(va_list args)
-{
-	str = va_arg(args, char *);
-	return (print_string(str));
-}
+	if (*format == 'c')
+	{
+		c = va_arg(args, int);
+		count += _putchar(c);
+	}
+	else if (*format == 's')
+	{
+		str = va_arg(args, char *);
+		count += print_string(str);
+	}
+	else if (*format == 'd' || *format == 'i')
+	{
+		num = va_arg(args, int);
+		count += print_number(num);
+	}
+	else
+	{
+		_putchar(*format);
+		count++;
+	}
 
-/**
- * handle_number - Handles %d and %i format specifiers.
- * @args: The va_list of arguments.
- * Return: The number of characters printed.
- */
-int handle_number(va_list args)
-{
-	num = va_arg(args, int);
-	return (print_number(num));
-}
-
-/**
- * handle_unknown - Handles unknown format specifier.
- * @format: The unknown format specifier.
- * Return: The number of characters printed.
- */
-int handle_unknown(char format)
-{
-	_putchar('%');
-	_putchar(format);
-	return (2);
+	return (count);
 }
