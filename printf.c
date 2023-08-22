@@ -10,8 +10,9 @@ int _printf(const char *format, ...)
 	va_list args;
 	int count = 0;
 	char c;
-	const char *str;
 	int num = 0;
+	const char *str;
+
 	if (format == NULL)
 		return (-1);
 
