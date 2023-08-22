@@ -10,7 +10,7 @@ int print_unsigned(unsigned int num)
     char buffer[32];
     int count = 0;
     int i = 0;
-
+    
     if (num == 0)
     {
         _putchar('0');
@@ -24,7 +24,7 @@ int print_unsigned(unsigned int num)
             num /= 10;
             i++;
         }
-
+        
         while (i > 0)
         {
             i--;
