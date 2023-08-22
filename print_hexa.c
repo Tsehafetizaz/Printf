@@ -26,7 +26,7 @@ int print_hexadecimal(unsigned int num, int uppercase)
             num /= 16;
             i++;
         }
-
+        
         while (i > 0)
         {
             i--;
@@ -34,6 +34,6 @@ int print_hexadecimal(unsigned int num, int uppercase)
             count++;
         }
     }
-
+    
     return (count);
 }
