@@ -7,6 +7,8 @@
  */
 int print_unsigned(unsigned int num)
 {
+	int printed_chars = 0;
+
 	if (num == 0)
 	{
 		_putchar('0');
@@ -31,6 +33,6 @@ int print_unsigned(unsigned int num)
 		num /= 10;
 	}
 
-	int printed_chars = print_string(num_str);
+	printed_chars = print_string(num_str);
 	return (printed_chars);
 }
