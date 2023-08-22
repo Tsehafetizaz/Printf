@@ -67,6 +67,21 @@ int process_format(const char *format, va_list args)
 		num = va_arg(args, unsigned int);
 		count += print_binary(num);
 	}
+	else if (*format == 'u')
+	{
+		num = va_arg(args, unsigned int);
+		count += print_unsigned(num);
+	}
+	else if (*format == 'o')
+	{
+		num = va_arg(args, unsigned int);
+		count += print_octal(num);
+	}
+	else if (*format == 'x' || *format == 'X')
+	{
+		num = va_arg(args, unsigned int);
+		count += print_hexadecimal(num, *format);
+	}
 	else
 	{
 		_putchar('%');
