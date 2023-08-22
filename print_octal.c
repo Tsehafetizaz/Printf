@@ -23,7 +23,7 @@ int print_octal(unsigned int num)
             num /= 8;
             i++;
         }
-
+        
         while (i > 0)
         {
             i--;
@@ -31,6 +31,6 @@ int print_octal(unsigned int num)
             count++;
         }
     }
-
+    
     return (count);
 }
