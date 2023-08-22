@@ -9,7 +9,10 @@ int _printf(const char *format, ...)
 {
 	va_list args;
 	int count = 0;
-
+	char c;
+	const char *str
+	int num = 0;
+	
 	if (format == NULL)
 		return (-1);
 
@@ -48,8 +51,7 @@ int _printf(const char *format, ...)
  */
 int handle_char(va_list args)
 {
-	char c = va_arg(args, int);
-	
+	c = va_arg(args, int);
 	return (_putchar(c));
 }
 
@@ -60,8 +62,7 @@ int handle_char(va_list args)
  */
 int handle_string(va_list args)
 {
-	const char *str = va_arg(args, char *);
-	
+	str = va_arg(args, char *);
 	return (print_string(str));
 }
 
@@ -72,8 +73,8 @@ int handle_string(va_list args)
  */
 int handle_number(va_list args)
 {
-	int num = va_arg(args, int);
-	return print_number(num);
+	num = va_arg(args, int);
+	return (print_number(num));
 }
 
 /**
