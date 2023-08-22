@@ -41,4 +41,12 @@ int print_string(const char *str);
  */
 int _printf(const char *format, ...);
 
+/**
+ * process_format - Processes format specifiers.
+ * @format: The format specifier.
+ * @args: The va_list of arguments.
+ * Return: The number of characters processed.
+ */
+int process_format(const char *format, va_list args);
+
 #endif /* MAIN_H */
