@@ -38,6 +38,18 @@ int _printf(const char *format, ...)
 				count++;
 			}
 		}
+		else if (format[i] == '%' &&
+				(format[i + 1] == 'd' || format[i + 1] == 'i'))
+		{
+			int num = va_arg(args, int);
+			if (num < 0)
+			{
+				count += _putchar('-');
+				num = -num;
+			}
+			count += print_number(num);
+			i++;
+		}
 		else
 		{
 			_putchar(*format);
