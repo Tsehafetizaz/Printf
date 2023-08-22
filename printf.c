@@ -38,7 +38,7 @@ int _printf(const char *format, ...)
 	}
 
 	va_end(args);
-	return count;
+	return (count);
 }
 
 /**
@@ -49,7 +49,8 @@ int _printf(const char *format, ...)
 int handle_char(va_list args)
 {
 	char c = va_arg(args, int);
-	return _putchar(c);
+	
+	return (_putchar(c));
 }
 
 /**
@@ -60,7 +61,8 @@ int handle_char(va_list args)
 int handle_string(va_list args)
 {
 	const char *str = va_arg(args, char *);
-	return print_string(str);
+	
+	return (print_string(str));
 }
 
 /**
@@ -83,5 +85,5 @@ int handle_unknown(char format)
 {
 	_putchar('%');
 	_putchar(format);
-	return 2;
+	return (2);
 }
