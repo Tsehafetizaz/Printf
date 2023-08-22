@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * print_binary - Prints an unsigned int in binary format.
  * @num: The unsigned int to be printed.
