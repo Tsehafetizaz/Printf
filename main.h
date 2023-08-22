@@ -42,11 +42,35 @@ int print_string(const char *str);
 int _printf(const char *format, ...);
 
 /**
- * process_format - Processes format specifiers.
- * @format: The format specifier.
- * @args: The va_list of arguments.
- * Return: The number of characters processed.
+ * handle_unknown - Handles unknown format specifier.
+ * @format: The unknown format specifier.
+ * Return: The number of characters printed.
  */
-int process_format(const char *format, va_list args);
+int handle_unknown(char format);
+
+/**
+ * handle_number - Handles %d and %i format specifiers.
+ * @args: The va_list of arguments.
+ * Return: The number of characters printed.
+ */
+int handle_number(va_list args);
+
+/**
+ * handle_string - Handles %s format specifier.
+ * @args: The va_list of arguments.
+ * Return: The number of characters printed.
+ */
+int handle_string(va_list args);
+
+/**
+ * handle_char - Handles %c format specifier.
+ * @args: The va_list of arguments.
+ * Return: The number of characters printed.
+ */
+int handle_char(va_list args)
+{
+	char c = va_arg(args, int);
+	return _putchar(c);
+}
 
 #endif /* MAIN_H */
