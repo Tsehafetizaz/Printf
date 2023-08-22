@@ -7,32 +7,31 @@
  */
 int print_unsigned(unsigned int num)
 {
-	int printed_chars = 0;
+    char buffer[32];
+    int count = 0;
+    int i = 0;
 
-	if (num == 0)
-	{
-		_putchar('0');
-		return (1);
-	}
+    if (num == 0)
+    {
+        _putchar('0');
+        count++;
+    }
+    else
+    {
+        while (num != 0)
+        {
+            buffer[i] = (num % 10) + '0';
+            num /= 10;
+            i++;
+        }
 
-	int num_digits = 0;
-	unsigned int temp = num;
+        while (i > 0)
+        {
+            i--;
+            _putchar(buffer[i]);
+            count++;
+        }
+    }
 
-	while (temp > 0)
-	{
-		temp /= 10;
-		num_digits++;
-	}
-
-	char num_str[num_digits + 1];
-	num_str[num_digits] = '\0';
-
-	for (int i = num_digits - 1; i >= 0; i--)
-	{
-		num_str[i] = num % 10 + '0';
-		num /= 10;
-	}
-
-	printed_chars = print_string(num_str);
-	return (printed_chars);
+    return (count);
 }
