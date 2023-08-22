@@ -68,5 +68,5 @@ int process_format(const char *format, va_list args)
 		count++;
 	}
 
-	return count;
+	return (count);
 }
