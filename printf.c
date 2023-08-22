@@ -12,7 +12,6 @@ int _printf(const char *format, ...)
 	char c;
 	const char *str;
 	int num = 0;
-	
 	if (format == NULL)
 		return (-1);
 
