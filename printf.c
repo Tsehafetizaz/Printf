@@ -1,93 +1,53 @@
 #include "main.h"
 
+void print_buffer(char buffer[], int *buff_ind);
+
 /**
- * _printf - Prints with format.
- * @format: The format string.
- * Return: The number of characters printed.
+ * _printf - Printf function
+ * @format: format.
+ * Return: Printed chars.
  */
 int _printf(const char *format, ...)
 {
-	va_list args;
-	int count = 0;
+	int i, printed = 0, printed_chars = 0;
+	int flags, width, precision, size, buff_ind = 0;
+	va_list list;
+	char buffer[BUFF_SIZE];
 
 	if (format == NULL)
 		return (-1);
 
-	va_start(args, format);
+	va_start(list, format);
 
-	while (*format != '\0')
+	for (i = 0; format && format[i] != '\0'; i++)
 	{
-		if (*format == '%' && *(format + 1) != '\0')
+		if (format[i] != '%')
 		{
-			format++;
-			count += process_format(format, args);
+			buffer[buff_ind++] = format[i];
+			if (buff_ind == BUFF_SIZE)
+				print_buffer(buffer, &buff_ind);
+			/* write(1, &format[i], 1);*/
+			printed_chars++;
 		}
 		else
 		{
-			_putchar(*format);
-			count++;
+			print_buffer(buffer, &buff_ind);
+			flags = get_flags(format, &i);
+			width = get_width(format, &i, list);
+			precision = get_precision(format, &i, list);
+			size = get_size(format, &i);
+			++i;
+			printed = handle_print(format, &i, list, buffer,
+				flags, width, precision, size);
+			if (printed == -1)
+				return (-1);
+			printed_chars += printed;
 		}
-		format++;
 	}
 
-	va_end(args);
-	return (count);
-}
+	print_buffer(buffer, &buff_ind);
 
-/**
- * process_format - Processes format specifiers.
- * @format: The format specifier.
- * @args: The va_list of arguments.
- * Return: The number of characters processed.
- */
-int process_format(const char *format, va_list args)
-{
-	int count = 0;
-	char c;
-	const char *str;
-	int num;
+	va_end(list);
 
-	if (*format == 'c')
-	{
-		c = va_arg(args, int);
-		count += _putchar(c);
-	}
-	else if (*format == 's')
-	{
-		str = va_arg(args, char *);
-		count += print_string(str);
-	}
-	else if (*format == 'd' || *format == 'i')
-	{
-		num = va_arg(args, int);
-		count += print_number(num);
-	}
-	else if (*format == 'b')
-	{
-		num = va_arg(args, unsigned int);
-		count += print_binary(num);
-	}
-	else if (*format == 'u')
-	{
-		num = va_arg(args, unsigned int);
-		count += print_unsigned(num);
-	}
-	else if (*format == 'o')
-	{
-		num = va_arg(args, unsigned int);
-		count += print_octal(num);
-	}
-	else if (*format == 'x' || *format == 'X')
-	{
-		num = va_arg(args, unsigned int);
-		count += print_hexadecimal(num, *format);
-	}
-	else
-	{
-		_putchar('%');
-		_putchar(*format);
-		count += 2;
-	}
-
-	return (count);
+	return (printed_chars);
 }
