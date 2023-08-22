@@ -3,6 +3,7 @@
 /**
  * _printf - Prints with format.
  * @format: Format string.
+ * @...: a variadic arguments.
  * Return: Number of characters printed.
  */
 int _printf(const char *format, ...)
