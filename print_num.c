@@ -7,6 +7,12 @@
 
 int print_number(int num)
 {
+	int num_d = 0;
+	int temp = num;
+	int printed_chars = 0;
+	int i = 0;
+	char num_str[12];
+
 	if (num < 0)
 	{
 		_putchar('-');
@@ -18,26 +24,22 @@ int print_number(int num)
 		_putchar('0');
 		return (1);
 	}
-	int num_digits = 0;
-	int temp = num;
 
 	while (temp > 0)
 	{
 		temp /= 10;
-		num_digits++;
+		num_d++;
 	}
 
-	char num_str[num_digits + 1];
+	num_str[num_d] = '\0';
 
-	num_str[num_digits] = '\0';
-
-	for (int i = num_digits - 1; i >= 0; i--)
+	for (i = num_d - 1; i >= 0; i--)
 	{
 		num_str[i] = num % 10 + '0';
 		num /= 10;
 	}
 
-	int printed_chars = print_string(num_str);
+	printed_chars = print_string(num_str);
 
 	return (printed_chars);
 }
