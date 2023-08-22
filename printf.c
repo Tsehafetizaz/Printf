@@ -62,6 +62,11 @@ int process_format(const char *format, va_list args)
 		num = va_arg(args, int);
 		count += print_number(num);
 	}
+	else if (*format == 'b')
+	{
+		num = va_arg(args, unsigned int);
+		count += print_binary(num);
+	}
 	else
 	{
 		_putchar('%');
