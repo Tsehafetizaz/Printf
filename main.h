@@ -62,5 +62,5 @@ int print_binary(unsigned int num);
  * Return: The number of digits printed.
  */
 int print_unsigned(unsigned int num);
-
+int print_octal(unsigned int num);
 #endif /* MAIN_H */
