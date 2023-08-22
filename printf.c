@@ -10,12 +10,13 @@ int _printf(const char *format, ...)
 {
 	va_list args;
 	int count = 0;
-	
+	char c;
+	const char *str;
+	int num;
+
 	if (format == NULL)
 		return (-1);
-	
 	va_start(args, format);
-	
 	while (*format != '\0')
 	{
 		if (*format == '%' && *(format + 1) != '\0')
@@ -23,17 +24,17 @@ int _printf(const char *format, ...)
 			format++;
 			if (*format == 'c')
 			{
-				char c = va_arg(args, int);
+				c = va_arg(args, int);
 				count += _putchar(c);
 			}
 			else if (*format == 's')
 			{
-				const char *str = va_arg(args, char *);
+				str = va_arg(args, char *);
 				count += print_string(str);
 			}
 			else if (*format == 'd' || *format == 'i')
 			{
-				int num = va_arg(args, int);
+				num = va_arg(args, int);
 				count += print_number(num);
 			}
 			else
@@ -49,7 +50,6 @@ int _printf(const char *format, ...)
 		}
 		format++;
 	}
-	
-	va_end(args);
+	va_end(args) ;
 	return (count);
 }
