@@ -1,54 +1,58 @@
 #include "main.h"
-#include <unistd.h>
-#include <stdarg.h>
-#include <string.h>
-
-int _putchar(char c)
-{
-return (write(1, &c, 1));
-}
-
-int print_char(va_list args)
-{
-return (_putchar(va_arg(args, int)));
-}
-
-int print_string(va_list args)
-{
-char *str = va_arg(args, char *);
-return (write(1, str, strlen(str)));
-}
+/**
+ * _printf - prints with format
+ * @format: no args
+ * Return: count
+ */
 
 int _printf(const char *format, ...)
 {
-unsigned int i = 0, count = 0;
 va_list args;
+int i = 0, count = 0;
+char *str;
 if (!format)
-{
 return (-1);
-}
 va_start(args, format);
-while (format && format[i])
+while (format[i])
 {
-if (format[i] == '%' && (format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == '%'))
+if (format[i] == '%' &&
+(format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == '%'))
 {
-if (format[i + 1] == 'c')
+switch (format[i + 1])
 {
-count += print_char(args);
+case 'c':
+{
+char c = va_arg(args, int);
+count += _putchar(c);
 }
-else if (format[i + 1] == 's')
-{
-count += print_string(args);
-}
-else if (format[i + 1] == '%')
-{
+i++;
+break;
+case 's':
+str = va_arg(args, char *);
+print_string(str);
+i++;
+break;
+case '%':
 count += _putchar('%');
+i++;
+break;
 }
+}
+else if (format[i] == '%' &&
+		(format[i + 1] == 'd' || format[i + 1] == 'i'))
+{
+int num = va_arg(args, int);
+if (num < 0)
+{
+count += _putchar('-');
+num = -num;
+}
+count += print_number(num);
 i++;
 }
 else
 {
-count += _putchar(format[i]);
+count += write(1, &format[i], 1);
 }
 i++;
 }

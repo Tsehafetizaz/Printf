@@ -8,5 +8,6 @@
 int _putchar(char c);
 int _printf(const char *format, ...);
 int print_number(int num);
-
-#endif /* MAIN_H */
+int str_len(const char *str);
+int print_string(const char *str);
+#endif
