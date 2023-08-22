@@ -7,16 +7,37 @@
 
 int print_number(int num)
 {
-int count = 0;
-if (num == 0)
-{
-count += _putchar('0');
-return (count);
-}
-if (num / 10)
-{
-count += print_number(num / 10);
-}
-count += _putchar('0' + num % 10);
-return (count);
+	if (num < 0)
+	{
+		_putchar('-');
+		num = -num;
+	}
+
+	if (num == 0)
+	{
+		_putchar('0');
+		return (1);
+	}
+	int num_digits = 0;
+	int temp = num;
+
+	while (temp > 0)
+	{
+		temp /= 10;
+		num_digits++;
+	}
+
+	char num_str[num_digits + 1];
+
+	num_str[num_digits] = '\0';
+
+	for (int i = num_digits - 1; i >= 0; i--)
+	{
+		num_str[i] = num % 10 + '0';
+		num /= 10;
+	}
+
+	int printed_chars = print_string(num_str);
+
+	return (printed_chars);
 }
