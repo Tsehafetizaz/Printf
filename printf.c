@@ -20,7 +20,14 @@ int _printf(const char *format, ...)
 		if (*format == '%' && *(format + 1) != '\0')
 		{
 			format++;
-			count += process_format(format, args);
+			if (*format == 'c')
+				count += handle_char(args);
+			else if (*format == 's')
+				count += handle_string(args);
+			else if (*format == 'd' || *format == 'i')
+				count += handle_number(args);
+			else
+				count += handle_unknown(*format);
 		}
 		else
 		{
@@ -31,42 +38,50 @@ int _printf(const char *format, ...)
 	}
 
 	va_end(args);
-	return (count);
+	return count;
 }
 
 /**
- * process_format - Processes format specifiers.
- * @format: The format specifier.
+ * handle_char - Handles %c format specifier.
  * @args: The va_list of arguments.
- * Return: The number of characters processed.
+ * Return: The number of characters printed.
  */
-int process_format(const char *format, va_list args)
+int handle_char(va_list args)
 {
-	int count = 0;
-	char c;
-	const char *str;
-	int num;
+	char c = va_arg(args, int);
+	return _putchar(c);
+}
 
-	if (*format == 'c')
-	{
-		c = va_arg(args, int);
-		count += _putchar(c);
-	}
-	else if (*format == 's')
-	{
-		str = va_arg(args, char *);
-		count += print_string(str);
-	}
-	else if (*format == 'd' || *format == 'i')
-	{
-		num = va_arg(args, int);
-		count += print_number(num);
-	}
-	else
-	{
-		_putchar(*format);
-		count++;
-	}
+/**
+ * handle_string - Handles %s format specifier.
+ * @args: The va_list of arguments.
+ * Return: The number of characters printed.
+ */
+int handle_string(va_list args)
+{
+	const char *str = va_arg(args, char *);
+	return print_string(str);
+}
 
-	return (count);
+/**
+ * handle_number - Handles %d and %i format specifiers.
+ * @args: The va_list of arguments.
+ * Return: The number of characters printed.
+ */
+int handle_number(va_list args)
+{
+	int num = va_arg(args, int);
+	return print_number(num);
+}
+
+/**
+ * handle_unknown - Handles unknown format specifier.
+ * @format: The unknown format specifier.
+ * Return: The number of characters printed.
+ */
+int handle_unknown(char format)
+{
+	_putchar('%');
+	_putchar(format);
+	return 2;
 }
