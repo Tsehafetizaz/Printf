@@ -54,6 +54,6 @@ int process_format(const char *format, va_list args);
  * @num: The unsigned int to be printed.
  * Return: The number of digits printed.
  */
-int print_binary(unsigned int num)
+int print_binary(unsigned int num);
 
 #endif /* MAIN_H */
