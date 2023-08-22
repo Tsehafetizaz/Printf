@@ -7,39 +7,37 @@
 
 int print_number(int num)
 {
-	int num_d = 0;
-	int temp = num;
 	int printed_chars = 0;
-	int i = 0;
-	char num_str[12];
+	int divisor = 1;
+	int temp;
+
+	if (num == 0)
+	{
+		_putchar('0');
+		return 1;
+	}
 
 	if (num < 0)
 	{
 		_putchar('-');
 		num = -num;
+		printed_chars++;
 	}
 
-	if (num == 0)
-	{
-		_putchar('0');
-		return (1);
-	}
-
+	temp = num;
 	while (temp > 0)
 	{
+		divisor *= 10;
 		temp /= 10;
-		num_d++;
 	}
 
-	num_str[num_d] = '\0';
-
-	for (i = num_d - 1; i >= 0; i--)
+	while (divisor > 1)
 	{
-		num_str[i] = num % 10 + '0';
-		num /= 10;
+		divisor /= 10;
+		_putchar((num / divisor) + '0');
+		num %= divisor;
+		printed_chars++;
 	}
 
-	printed_chars = print_string(num_str);
-
-	return (printed_chars);
+	return printed_chars;
 }
