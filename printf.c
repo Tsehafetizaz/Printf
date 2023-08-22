@@ -1,57 +1,93 @@
 #include "main.h"
-#include <unistd.h>
-#include <stdarg.h>
-#include <string.h>
 
-int _putchar(char c)
-{
-return (write(1, &c, 1));
-}
-
-int print_char(va_list args)
-{
-return (_putchar(va_arg(args, int)));
-}
-
-int print_string(va_list args)
-{
-char *str = va_arg(args, char *);
-return (write(1, str, strlen(str)));
-}
-
+/**
+ * _printf - Prints with format.
+ * @format: The format string.
+ * Return: The number of characters printed.
+ */
 int _printf(const char *format, ...)
 {
-unsigned int i = 0, count = 0;
-va_list args;
-if (!format)
-{
-return (-1);
+	va_list args;
+	int count = 0;
+
+	if (format == NULL)
+		return (-1);
+
+	va_start(args, format);
+
+	while (*format != '\0')
+	{
+		if (*format == '%' && *(format + 1) != '\0')
+		{
+			format++;
+			count += process_format(format, args);
+		}
+		else
+		{
+			_putchar(*format);
+			count++;
+		}
+		format++;
+	}
+
+	va_end(args);
+	return (count);
 }
-va_start(args, format);
-while (format && format[i])
+
+/**
+ * process_format - Processes format specifiers.
+ * @format: The format specifier.
+ * @args: The va_list of arguments.
+ * Return: The number of characters processed.
+ */
+int process_format(const char *format, va_list args)
 {
-if (format[i] == '%' && (format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == '%'))
-{
-if (format[i + 1] == 'c')
-{
-count += print_char(args);
-}
-else if (format[i + 1] == 's')
-{
-count += print_string(args);
-}
-else if (format[i + 1] == '%')
-{
-count += _putchar('%');
-}
-i++;
-}
-else
-{
-count += _putchar(format[i]);
-}
-i++;
-}
-va_end(args);
-return (count);
+	int count = 0;
+	char c;
+	const char *str;
+	int num;
+
+	if (*format == 'c')
+	{
+		c = va_arg(args, int);
+		count += _putchar(c);
+	}
+	else if (*format == 's')
+	{
+		str = va_arg(args, char *);
+		count += print_string(str);
+	}
+	else if (*format == 'd' || *format == 'i')
+	{
+		num = va_arg(args, int);
+		count += print_number(num);
+	}
+	else if (*format == 'b')
+	{
+		num = va_arg(args, unsigned int);
+		count += print_binary(num);
+	}
+	else if (*format == 'u')
+	{
+		num = va_arg(args, unsigned int);
+		count += print_unsigned(num);
+	}
+	else if (*format == 'o')
+	{
+		num = va_arg(args, unsigned int);
+		count += print_octal(num);
+	}
+	else if (*format == 'x' || *format == 'X')
+	{
+		num = va_arg(args, unsigned int);
+		count += print_hexadecimal(num, *format);
+	}
+	else
+	{
+		_putchar('%');
+		_putchar(*format);
+		count += 2;
+	}
+
+	return (count);
 }
