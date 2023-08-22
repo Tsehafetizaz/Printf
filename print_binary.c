@@ -10,13 +10,13 @@ int print_binary(unsigned int num)
 	int num_digits = 0;
 	unsigned int temp = num;
 	unsigned int mask = 0;
-	
+
 	if (num == 0)
 	{
 		_putchar('0');
 		return (1);
 	}
-	
+
 	while (temp > 0)
 	{
 		temp /= 2;
