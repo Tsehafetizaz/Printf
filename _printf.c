@@ -1,35 +1,44 @@
 #include "main.h"
+#include <stdarg.h>
 #include <unistd.h>
-/**
-* struct format_func - Struct format
-* @type: The format type (char, string, etc.)
-* @f: The function associated
-*/
-typedef struct format_func
-{
-char type;
-int (*f)(va_list);
-} format_f;
+/*
+ * _printf: - A custom implementation of the printf function.
+ * @format: The formatting string.
+ * ... : Variable arguments.
+ * Return: Number of characters printed.
+ */
 int _printf(const char *format, ...)
 {
 unsigned int i = 0, count = 0;
 va_list args;
-format_f types[] = {
-{'c', _print_char},
-{'s', _print_string},
-{'%', _print_percent},
-{'\0', NULL}
-};
-if (!format)
-return (-1);
 va_start(args, format);
 while (format && format[i])
 {
-if (format[i] == '%' && (format[i + 1] == 'c' ||
-format[i + 1] == 's' || format[i + 1] == '%'))
+/* Check for format specifiers */
+if (format[i] == '%' &&
+(format[i + 1] == 'c' || format[i + 1] == 's' || format[i + 1] == '%'))
 {
-count += (types[format[i + 1] - 'c']).f(args);
-i++;
+i++; /* Skip the % symbol */
+if (format[i] == 'c')
+{
+char c = (char) va_arg(args, int);
+write(1, &c, 1);
+count++;
+}
+else if (format[i] == 's')
+{
+char *str = va_arg(args, char*);
+int len = 0;
+while (str[len])
+len++;
+write(1, str, len);
+count += len;
+}
+else if (format[i] == '%')
+{
+write(1, &format[i], 1);
+count++;
+}
 }
 else
 {
@@ -41,3 +50,4 @@ i++;
 va_end(args);
 return (count);
 }
+
