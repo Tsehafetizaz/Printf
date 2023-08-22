@@ -2,46 +2,25 @@
 
 /**
  * _printf - Prints with format.
- * @format: Format string.
- * @...: a variadic arguments.
- * Return: Number of characters printed.
+ * @format: The format string.
+ * Return: The number of characters printed.
  */
 int _printf(const char *format, ...)
 {
 	va_list args;
 	int count = 0;
-	char c;
-	const char *str;
-	int num;
 
 	if (format == NULL)
 		return (-1);
+
 	va_start(args, format);
+
 	while (*format != '\0')
 	{
 		if (*format == '%' && *(format + 1) != '\0')
 		{
 			format++;
-			if (*format == 'c')
-			{
-				c = va_arg(args, int);
-				count += _putchar(c);
-			}
-			else if (*format == 's')
-			{
-				str = va_arg(args, char *);
-				count += print_string(str);
-			}
-			else if (*format == 'd' || *format == 'i')
-			{
-				num = va_arg(args, int);
-				count += print_number(num);
-			}
-			else
-			{
-				_putchar(*format);
-				count++;
-			}
+			count += process_format(format, args);
 		}
 		else
 		{
@@ -50,6 +29,44 @@ int _printf(const char *format, ...)
 		}
 		format++;
 	}
-	va_end(args) ;
+
+	va_end(args);
 	return (count);
+}
+
+/**
+ * process_format - Processes format specifiers.
+ * @format: The format specifier.
+ * @args: The va_list of arguments.
+ * Return: The number of characters processed.
+ */
+int process_format(const char *format, va_list args)
+{
+	int count = 0;
+	char c;
+	const char *str;
+	int num;
+
+	if (*format == 'c')
+	{
+		c = va_arg(args, int);
+		count += _putchar(c);
+	}
+	else if (*format == 's')
+	{
+		str = va_arg(args, char *);
+		count += print_string(str);
+	}
+	else if (*format == 'd' || *format == 'i')
+	{
+		num = va_arg(args, int);
+		count += print_number(num);
+	}
+	else
+	{
+		_putchar(*format);
+		count++;
+	}
+
+	return count;
 }
