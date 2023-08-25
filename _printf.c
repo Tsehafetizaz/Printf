@@ -19,7 +19,7 @@ int _printf(const char *format, ...)
 
 	va_start(args, format);
 
-	parse_and_print(format, args, &char_count);
+	parse_print(format, args, &char_count);
 
 	va_end(args);
 
