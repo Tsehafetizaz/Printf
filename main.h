@@ -11,10 +11,12 @@ char print_char(va_list args);
 char print_string(va_list args);
 void print_percent(int *char_count);
 int print_number(int num);
+void _print_num(int n, int *char_count);
 //char *print_integer(va_list args);
 //char *print_binary(va_list args);
 //char *_itoa(int num, char *str);
 int _putchar(char c);
+void _puts(const char *str);
 int _strlen(const char *s);
 
 #endif /* MAIN_H */
