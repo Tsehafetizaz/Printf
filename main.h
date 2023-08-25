@@ -14,6 +14,5 @@ int print_number(int num);
 void _print_num(int n, int *char_count);
 int _putchar(char c);
 void _puts(const char *str);
-int _strlen(const char *s);
 
 #endif /* MAIN_H */
