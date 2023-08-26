@@ -13,6 +13,7 @@ int _printf(const char *format, ...)
 	int num = 0;
 	char *str;
 	char *numm;
+	int count = 0;
 
 	char output_buffer[1024];
         char *output = output_buffer;
@@ -28,6 +29,7 @@ int _printf(const char *format, ...)
 				char chr = va_arg(args, int);
 				*output = chr;
 				output++;
+				count++;
 			}
 			else if (*format == 's')
 			{
@@ -36,6 +38,7 @@ int _printf(const char *format, ...)
 				{
 					*output = *str;
 					output++;
+					count++;
 					str++;
 				}
 			}
@@ -43,6 +46,7 @@ int _printf(const char *format, ...)
 			{
 				*output = '%';
 				output++;
+				count++;
 			}
 			else if(*format == 'd' || *format == 'i')
 			{
@@ -52,6 +56,7 @@ int _printf(const char *format, ...)
                                 {
                                         *output = *numm;
                                         output++;
+					count++;
                                         numm++;
                                 }
 			}
@@ -59,18 +64,22 @@ int _printf(const char *format, ...)
 			{
 				*output = *format;
 				output++;
+				count++;
 			}
 		}
 		else
 		{
 			*output = *format;
 			output++;
+			count++;
 		}
 
 		format ++;
 	}
 
 	*output = '\0';
+	count++;
+	output = output - count;
 	print_string(output);
 
 	va_end(args);
