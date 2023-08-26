@@ -13,27 +13,37 @@ void print_string(char *str)
 	}
 }
 
-void print_number(int num)
+/**
+ * print_number - Convert an integer to a string and return a pointer to it.
+ * @num: The integer to convert.
+ *
+ * Return: Pointer to the resulting string.
+ */
+char *print_number(int num)
 {
-	int divisor = 1;
+    static char numi[1024];
 
-	if (num < 0)
-	{ 
-		_putchar('-');
-		num = -num;
-	}
-	
-	while (num / divisor >= 10)
-	{
-		divisor *= 10;
-	}
+    int divisor = 1;
+    char *result = numi;
 
-	while (divisor > 0)
-	{
-		int digit = num / divisor;
-		_putchar('0' + digit);
-		num %= divisor;
-		divisor /= 10;
-	}
+    if (num < 0) {
+        *result = '-';
+        result++;
+        num = -num;
+    }
 
+    while (num / divisor >= 10) {
+        divisor *= 10;
+    }
+
+    while (divisor > 0) {
+        int digit = num / divisor;
+        *result = '0' + digit;
+        result++;
+        num %= divisor;
+        divisor /= 10;
+    }
+
+    *result = '\0';
+    return numi;
 }
