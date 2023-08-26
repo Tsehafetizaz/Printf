@@ -25,6 +25,11 @@ int _printf(const char *format, ...)
 			{
 				_putchar(*format);
 			}
+			else if(*format == 'd' || *format == 'i')
+			{
+				int num = va_arg(args, arg);
+				print_number(num);
+			}
 			else
 			_putchar(*format);
 		}
@@ -33,6 +38,8 @@ int _printf(const char *format, ...)
 
 		format ++;
 	}
+
+	va_end(args);
 
 	return (0);
 }
