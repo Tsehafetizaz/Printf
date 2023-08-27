@@ -60,6 +60,18 @@ int _printf(const char *format, ...)
                                         numm++;
                                 }
 			}
+			else if(*format == 'b')
+			{
+				num = va_arg(args, int);
+				numm = print_binary(num);
+				while(*numm)
+				{
+					*output = *numm;
+					output++;
+					count++;
+					numm++;
+				}
+			}
 			else
 			{
 				*output = *format;

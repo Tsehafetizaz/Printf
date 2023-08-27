@@ -45,5 +45,37 @@ char *print_number(int num)
     }
 
     *result = '\0';
-    return numi;
+    return (numi);
+}
+
+char *print_binary(int num)
+{
+	static char numi[1024];
+	char *result = numi;
+	int i = 0;
+	int binary[32];
+	int j = 0;
+
+	while (num > 0)
+	{
+		binary[i] = num % 2;
+		num /= 2;
+		i++;
+	}
+
+	if (i == '0')
+	{
+		*result = '0';
+		result++;
+	}
+	else
+	{
+		for (j = i - 1; j >= 0; j--)
+		{
+			*result = '0' + binary[j];
+			result++;
+		}
+	}
+
+	return (numi);
 }
