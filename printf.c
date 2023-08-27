@@ -74,6 +74,7 @@ int _printf(const char *format, ...)
 			}
 			else
 			{
+				format--;
 				*output = *format;
 				output++;
 				count++;
