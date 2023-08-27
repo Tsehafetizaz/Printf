@@ -23,7 +23,6 @@ void print_string(char *str)
 char *print_number(int num)
 {
 	static char numi[1024];
-	
 	int divisor = 1;
 	char *result = numi;
 	
