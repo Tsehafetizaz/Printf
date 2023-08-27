@@ -78,8 +78,6 @@ int _printf(const char *format, ...)
 	}
 
 	*output = '\0';
-	count++;
-	output = output - count;
 	print_string(output_buffer);
 
 	va_end(args);
